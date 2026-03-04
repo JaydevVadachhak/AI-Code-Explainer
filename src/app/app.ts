@@ -24,7 +24,7 @@ export class App implements OnInit {
     this.historyCount = this.historyService.count;
   }
 
-  onExplainRequested(event: { code: string; lang: string; options: any }): void {
+  onExplainRequested(event: { code: string; options: any }): void {
     this.isLoading = true;
   }
 }
