@@ -1,0 +1,24 @@
+<!-- src/app/components/code-editor/code-editor.component.html -->
+<div class="editor-panel">
+  <!-- TOP BAR -->
+  <div iv class="editor-topbar">
+    <div class="editor-actions">
+      <button class="btn btn-secondary" (click)="clearEditor()" [disabled]="isLoading">
+        Clear
+      </button>
+      <button class="btn btn-primary" (click)="onExplain()" [disabled]="isLoading">
+        @if (!isLoading) {
+          <span>⚡ Explain</span>
+        } @else {
+          <span class="loading-text"> <span class="loader"></span> Analyzing... </span>
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- CODE TEXTAREA -->
+  <div class="code-input-wrap">
+    <textarea id="code-input" [(ngModel)]="code" spellcheck="false" [placeholder]="placeholder">
+    </textarea>
+  </div>
+</div>
