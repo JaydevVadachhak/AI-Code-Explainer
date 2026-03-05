@@ -1,1 +1,30 @@
-<p>history-panel works!</p>
+<div class="history-panel">
+  <div class="history-toolbar">
+    <div class="history-info">{{ history().length }} snippet(s) saved</div>
+    @if (history().length) {
+      <button class="btn btn-ghost" (click)="onClearAll()">Clear All</button>
+    }
+  </div>
+
+  <!-- Empty state -->
+  @if (!history().length) {
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>No snippets explained yet.<br />Head to the Explain tab to get started.</p>
+    </div>
+  }
+
+  <!-- History items -->
+  @for (item of history(); track $index) {
+    <div class="history-item">
+      <div class="history-content">
+        <div class="history-preview">{{ item.code.split('\n')[0] }}</div>
+        <div class="history-time">{{ item.timestamp | date: 'medium' }}</div>
+        @if (item.explanation) {
+          <div class="history-explanation">{{ item.explanation | slice: 0 : 120 }}...</div>
+        }
+      </div>
+      <button class="btn-delete" (click)="$event.stopPropagation(); onDelete(item.id)">✕</button>
+    </div>
+  }
+</div>

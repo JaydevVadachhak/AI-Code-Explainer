@@ -19,7 +19,12 @@ export class ClaudeService {
     return from(
       fetch(environment.API_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': environment.API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
         body: JSON.stringify(body),
       }).then((r) => r.json()),
     ).pipe(

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Signal, signal } from '@angular/core';
 import { Header } from './components/header/header';
 import { HistoryService, SnippetEntry } from './services/history-service';
 import { ResultCard } from './components/result-card/result-card';
@@ -20,13 +20,14 @@ interface ResultEntry extends SnippetEntry {
 export class App implements OnInit {
   protected readonly title = signal('AI-Code-Explainer');
   public activeTab: 'explain' | 'history' = 'explain';
-  public historyCount!: WritableSignal<number>;
+  public historyCount!: Signal<number>;
   public isLoading: boolean = false;
   public results: ResultEntry[] = [];
 
   constructor(
     private readonly historyService: HistoryService,
     private readonly claudeService: ClaudeService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -47,14 +48,17 @@ export class App implements OnInit {
         options,
       };
       this.results = [entry, ...this.results];
+      this.historyService.add(entry);
     } catch (err: any) {
       alert('Error analyzing code: ' + err.message);
     } finally {
       this.isLoading = false;
+      this.cdr.markForCheck();
     }
   }
 
   onDismiss(id: string): void {
     this.results = this.results.filter((r) => r.id !== id);
+    this.cdr.markForCheck();
   }
 }

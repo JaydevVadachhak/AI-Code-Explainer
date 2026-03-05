@@ -1,0 +1,136 @@
+:host {
+  display: block;
+}
+
+.history-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.history-info {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+
+  p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+
+.history-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+
+  &:hover {
+    border-color: rgba(0, 229, 255, 0.35);
+    background: var(--surface2);
+  }
+}
+
+.history-content {
+  flex: 1;
+  min-width: 0; // prevent text overflow breaking layout
+}
+
+.history-preview {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-time {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.history-explanation {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btn-delete {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.15s;
+  padding: 0;
+  line-height: 1;
+
+  &:hover {
+    color: var(--accent3);
+    border-color: rgba(255, 107, 107, 0.4);
+    background: rgba(255, 107, 107, 0.08);
+  }
+}
+
+.btn {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &.btn-ghost {
+    background: none;
+    color: var(--text-dim);
+    border: 1px solid transparent;
+
+    &:hover {
+      color: var(--accent3);
+      border-color: rgba(255, 107, 107, 0.3);
+    }
+  }
+}
