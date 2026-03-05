@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ExplanationResult } from './history-service';
 import { catchError, from, map, Observable, throwError } from 'rxjs';
-import { environment } from '../../environments/envrionment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
