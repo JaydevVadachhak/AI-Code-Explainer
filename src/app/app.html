@@ -32,7 +32,14 @@
 
     <!-- RESULT CARDS -->
     <div id="results" class="results-area">
-      <app-result-card></app-result-card>
+      @for (entry of results; track $index) {
+        <app-result-card
+          [entry]="entry"
+          [index]="results.length - $index"
+          [options]="entry.options!"
+          (dismiss)="onDismiss($event)"
+        ></app-result-card>
+      }
     </div>
   }
 

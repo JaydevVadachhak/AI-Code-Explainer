@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Header } from './components/header/header';
-import { HistoryService } from './services/history-service';
+import { HistoryService, SnippetEntry } from './services/history-service';
 import { ResultCard } from './components/result-card/result-card';
 import { HistoryPanel } from './components/history-panel/history-panel';
-import { CodeEditor } from './components/code-editor/code-editor';
+import { CodeEditor, ExplainOptions } from './components/code-editor/code-editor';
+import { ClaudeService } from './services/claude-service';
+
+interface ResultEntry extends SnippetEntry {
+  options?: ExplainOptions;
+}
 
 @Component({
   selector: 'app-root',
@@ -17,14 +22,39 @@ export class App implements OnInit {
   public activeTab: 'explain' | 'history' = 'explain';
   public historyCount!: WritableSignal<number>;
   public isLoading: boolean = false;
+  public results: ResultEntry[] = [];
 
-  constructor(private readonly historyService: HistoryService) {}
+  constructor(
+    private readonly historyService: HistoryService,
+    private readonly claudeService: ClaudeService,
+  ) {}
 
   ngOnInit(): void {
     this.historyCount = this.historyService.count;
   }
 
-  onExplainRequested(event: { code: string; options: any }): void {
+  async onExplainRequested(event: { code: string; options: ExplainOptions }): Promise<void> {
+    const { code, options } = event;
     this.isLoading = true;
+    try {
+      const result = await this.claudeService.explainCode(code).toPromise();
+      const entry: ResultEntry = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        code,
+        explanation: result?.explanation || '',
+        timestamp: Date.now(),
+        result,
+        options,
+      };
+      this.results = [entry, ...this.results];
+    } catch (err: any) {
+      alert('Error analyzing code: ' + err.message);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  onDismiss(id: string): void {
+    this.results = this.results.filter((r) => r.id !== id);
   }
 }

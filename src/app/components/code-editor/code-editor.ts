@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 export interface ExplainOptions {
   wantComplexity: boolean;
   wantDiff: boolean;
-  wantAST: boolean;
-  wantHighlight: boolean;
 }
 
 @Component({
@@ -25,8 +23,6 @@ export class CodeEditor {
   public options: ExplainOptions = {
     wantComplexity: true,
     wantDiff: true,
-    wantAST: true,
-    wantHighlight: true,
   };
 
   clearEditor(): void {
