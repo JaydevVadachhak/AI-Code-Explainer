@@ -1,0 +1,6 @@
+export const environment = {
+  production: true,
+  API_ENDPOINT: 'https://api.anthropic.com/v1/messages',
+  AI_MODEL: 'claude-haiku-4-5-20251001',
+  API_KEY: 'YOUR API KEY HERE',
+};
